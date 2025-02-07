@@ -50,6 +50,19 @@ button[type='submit'] {
 button[type='submit']:hover {
   background-color: #5146d6;
 }
+
+.btn {
+  padding: 10px;
+  background-color: #6c63ff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 0 10px;
+}
+
 #result {
   margin-top: 20px;
   font-size: 16px;
@@ -81,4 +94,23 @@ button[type='submit']:hover {
 
 hr {
   color: white;
+}
+
+.voice-button-container {
+  display: flex;
+  align-items: start;
+}
+
+.loader {
+  width: 30px;
+  height: 30px;
+  border: 5px solid #f3f3f3; /* Light grey */
+  border-top: 5px solid #3498db; /* Blue */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

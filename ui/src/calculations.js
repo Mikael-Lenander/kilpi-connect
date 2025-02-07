@@ -1,3 +1,5 @@
+import { symptoms } from './report'
+
 export function calculateAverageHeartRate() {
   try {
     console.log('Using embedded CSV data instead of fetching a file.')
@@ -40,4 +42,24 @@ export function calculateAverageHeartRate() {
   } catch (error) {
     console.error(' Error:', error)
   }
+}
+
+const symptomPoints = symptoms.reduce(
+  (acc, symptom) => ({ ...acc, [symptom.name]: { presentWeight: symptom.presentWeight, absentWeight: symptom.absentWeight } }),
+  {}
+)
+
+export function calculateScore(selectedSymptoms) {
+  let totalScore = 0
+  const allSymptoms = symptoms.map(symptom => symptom.name)
+  const notSelectedSymptoms = new Set(allSymptoms).difference(new Set(selectedSymptoms))
+
+  selectedSymptoms.forEach(symptom => {
+    totalScore += symptomPoints[symptom].presentWeight
+  })
+  notSelectedSymptoms.forEach(symptom => {
+    totalScore += symptomPoints[symptom].absentWeight
+  })
+
+  return totalScore
 }

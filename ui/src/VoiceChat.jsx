@@ -1,8 +1,12 @@
 import { useState, useRef } from 'react'
+import { calculateScore } from './calculations'
+import { generateReport, symptoms } from './report'
 
 const VoiceChat = () => {
   const [isRecording, setIsRecording] = useState(false)
   const [audioBlob, setAudioBlob] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const [response, setResponse] = useState(null)
   const mediaRecorderRef = useRef(null)
   const audioChunksRef = useRef([])
 
@@ -34,43 +38,81 @@ const VoiceChat = () => {
     }
   }
 
-  // Download recording
-  const downloadRecording = () => {
-    if (audioBlob) {
-      const url = URL.createObjectURL(audioBlob)
-      const a = document.createElement('a')
-      a.href = url
-      a.download = 'recording.wav'
-      document.body.appendChild(a)
-      a.click()
-      document.body.removeChild(a)
-      URL.revokeObjectURL(url)
+  const sendRecording = async () => {
+    if (!audioBlob) {
+      alert('No recording to send.')
+      return
+    }
+
+    const formData = new FormData()
+    formData.append('file', audioBlob, 'recording.wav')
+
+    try {
+      setLoading(true)
+      const response = await fetch('http://localhost:8000/api/voice-chat', {
+        method: 'POST',
+        body: formData,
+      })
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`)
+      }
+
+      const result = await response.json()
+      setResponse(result)
+      console.log('Server response:', result)
+    } catch (error) {
+      console.error('Error sending recording:', error)
+      alert('Failed to send recording.')
+    } finally {
+      setLoading(false)
     }
   }
 
   return (
-    <div>
-      <h1>Voice Recorder</h1>
-      <div>
+    <div className='container'>
+      <h2>Hello! How are you feeling today?</h2>
+      <div className='voice-button-container'>
         {!isRecording ? (
-          <button onClick={startRecording} disabled={isRecording}>
+          <button onClick={startRecording} disabled={isRecording} className='btn'>
             Start Recording
           </button>
         ) : (
-          <button onClick={stopRecording} disabled={!isRecording}>
-            Stop Recording
-          </button>
+          <span style={{ display: 'flex', alignItems: 'center' }}>
+            <button onClick={stopRecording} disabled={!isRecording} className='btn'>
+              Stop Recording
+            </button>
+            <img src='/voice.png' alt='Record Icon' width='30' height='30' style={{ marginRight: 10 }} />
+          </span>
         )}
-        {audioBlob && (
-          <button onClick={downloadRecording} disabled={!audioBlob}>
-            Download Recording
-          </button>
+        {audioBlob && !isRecording && (
+          <>
+            <audio controls src={URL.createObjectURL(audioBlob)} />
+            <button className='btn' onClick={sendRecording} disabled={!audioBlob}>
+              Send
+            </button>
+          </>
         )}
+        {loading && <div className='loader' />}
       </div>
-      {audioBlob && (
+      {response && (
         <div>
-          <h2>Playback:</h2>
-          <audio controls src={URL.createObjectURL(audioBlob)} />
+          <p>
+            <b>You:</b> {response.transcript}
+          </p>
+          <p>
+            <b>Response</b>: {response.symptoms.length > 0
+              ? `I'm sorry to hear that you are experiencing these symptoms (${response.symptoms.join(
+                  ', '
+                )}). I hope you get better soon. But thanks for sharing!`
+              : "Seems like you don't have any symptoms. Good to hear!"}
+          </p>
+          <button
+            className='btn'
+            onClick={() => generateReport(calculateScore(response.symptoms.concat(symptoms[11].name)), response.symptoms.concat(symptoms[11].name))}
+          >
+            Download Report
+          </button>
         </div>
       )}
     </div>
