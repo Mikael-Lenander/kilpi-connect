@@ -1,22 +1,19 @@
 import { Routes, Route, useNavigate } from 'react-router-dom'
-import Questionnaire from './Questionnaire'
-import VoiceChat from './VoiceChat'
-import Menu from './Menu'
+import Login from './Login'
+import Navbar from './Navbar'
+import Messages from './Messages'
+import QualityRegister from './QualityRegister'
 
 function App() {
   const navigate = useNavigate()
 
   return (
     <>
-      <nav className='navbar'>
-        <h1 onClick={() => navigate('/')} className='navbar-brand'>
-          Maisa
-        </h1>
-      </nav>
+      <Navbar />
       <Routes>
-        <Route path='/' element={<Menu />} />
-        <Route path='/questionnaire' element={<Questionnaire />} />
-        <Route path='/voice-chat' element={<VoiceChat />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/messages' element={<Messages />} />
+        <Route path='/quality-register' element={<QualityRegister />} />
       </Routes>
     </>
   )

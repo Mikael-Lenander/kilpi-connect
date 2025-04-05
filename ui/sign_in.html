@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+</head>
+<body>
+
+      
+
+
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script>
+        function toggleLogin(role) {
+            document.querySelectorAll('.form-section').forEach(el => el.classList.remove('active'));
+            document.getElementById(role).classList.add('active');
+
+            document.querySelectorAll('.login-toggle button').forEach(btn => btn.classList.remove('active'));
+            if (role === 'doctor') {
+                document.querySelectorAll('.login-toggle button')[0].classList.add('active');
+            } else {
+                document.querySelectorAll('.login-toggle button')[1].classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>
