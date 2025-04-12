@@ -67,9 +67,10 @@ nav {
 }
 
 .chart-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two equal-width columns */
+  grid-template-rows: 1fr 1fr; /* Two equal-height rows */
+  gap: 1rem;
 }
 
 .login-toggle {

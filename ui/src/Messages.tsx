@@ -35,6 +35,7 @@ export default function Messages() {
             <p style={{ paddingBottom: 10 }}>{message.date}</p>
             <button className='primary-btn'>{message.button}</button>
             <button className='primary-btn'>See the details</button>
+            <button className='primary-btn'>Renew prescription</button>
             <button className='secondary-btn' onClick={() => setVisibleMessages({ ...visibleMessages, [message.id]: false })}>
               Ignore
             </button>

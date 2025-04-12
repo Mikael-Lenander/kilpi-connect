@@ -116,7 +116,7 @@ function TSHCoverage() {
   }
 
   return (
-    <div style={{ height: '500px', width: '45%' }}>
+    <div style={{ height: '500px', width: '600px' }}>
       <Line data={data} options={options} />
     </div>
   )
@@ -211,7 +211,102 @@ function SymptomsAfter1year() {
   }
 
   return (
-    <div style={{ height: '500px', width: '45%' }}>
+    <div style={{ height: '500px', width: '600px' }}>
+      <Line data={data} options={options} />
+    </div>
+  )
+}
+
+function TSHPercentageAfter6Months() {
+  const data = {
+    labels: ['2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
+    datasets: [
+      {
+        label: 'Etelä-Karjala',
+        data: [91, 91, 88, 89, 88, 87, 85, 84],
+        borderColor: colors[0],
+        fill: false,
+      },
+      {
+        label: 'Keski-Uusimaa',
+        data: [94, 90, 90, 90, 88, 86, 88, 87],
+        borderColor: colors[1],
+        fill: false,
+      },
+      {
+        label: 'Kanta-Häme',
+        data: [93, 89, 89, 90, 90, 87, 85, 86],
+        borderColor: colors[2],
+        fill: false,
+      },
+      {
+        label: 'Kymenlaakso',
+        data: [94, 89, 90, 88, 87, 88, 87, 85],
+        borderColor: colors[3],
+        fill: false,
+      },
+      {
+        label: 'Helsinki',
+        data: [92, 92, 91, 89, 89, 85, 84, 83],
+        borderColor: colors[4],
+        fill: false,
+      },
+      {
+        label: 'Länsi-Uusimaa',
+        data: [92, 91, 89, 89, 90, 85, 84, 84],
+        borderColor: colors[6],
+        fill: false,
+      },
+      {
+        label: 'Etelä-Pohjanmaa',
+        data: [90, 91, 89, 88, 89, 87, 87, 85],
+        borderColor: colors[7],
+        fill: false,
+      },
+      // Add more regions here similarly
+    ],
+  }
+
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: 'right' as const,
+        labels: {
+          boxWidth: 15,
+        },
+      },
+      title: {
+        display: true,
+        text: 'Percentage of patients having TSH in the reference range after 6 months of starting treatment',
+        align: 'start',
+        font: {
+          size: 18,
+          weight: 'bold',
+        },
+      },
+    },
+    scales: {
+      y: {
+        title: {
+          display: true,
+          text: 'Percentage (%)',
+        },
+        min: 0,
+        max: 100,
+      },
+      x: {
+        title: {
+          display: true,
+          text: 'Year',
+        },
+      },
+    },
+  }
+
+  return (
+    <div style={{ height: '500px', width: '650px' }}>
       <Line data={data} options={options} />
     </div>
   )
@@ -224,6 +319,7 @@ export default function QualityRegister() {
       <div className='chart-container'>
         <TSHCoverage />
         <SymptomsAfter1year />
+        <TSHPercentageAfter6Months />
       </div>
     </div>
   )
