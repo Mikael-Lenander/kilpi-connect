@@ -116,7 +116,7 @@ function TSHCoverage() {
   }
 
   return (
-    <div style={{ height: '500px', width: '600px' }}>
+    <div style={{ height: '500px', width: '90%' }}>
       <Line data={data} options={options} />
     </div>
   )
@@ -211,7 +211,7 @@ function SymptomsAfter1year() {
   }
 
   return (
-    <div style={{ height: '500px', width: '600px' }}>
+    <div style={{ height: '500px', width: '90%' }}>
       <Line data={data} options={options} />
     </div>
   )
@@ -306,7 +306,7 @@ function TSHPercentageAfter6Months() {
   }
 
   return (
-    <div style={{ height: '500px', width: '650px' }}>
+    <div style={{ height: '500px', width: '90%' }}>
       <Line data={data} options={options} />
     </div>
   )

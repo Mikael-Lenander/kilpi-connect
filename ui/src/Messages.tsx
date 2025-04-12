@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const messages = [
   {
@@ -23,6 +24,11 @@ const messages = [
 
 export default function Messages() {
   const [visibleMessages, setVisibleMessages] = useState(messages.reduce((obj, message) => ({ ...obj, [message.id]: true }), {}))
+  const navigate = useNavigate()
+
+  function handleSeeDetails() {
+    navigate('/patient/123')
+  }
 
   return (
     <div className='content'>
@@ -34,8 +40,10 @@ export default function Messages() {
             <h4 style={{ marginBottom: 5 }}>{message.text}</h4>
             <p style={{ paddingBottom: 10 }}>{message.date}</p>
             <button className='primary-btn'>{message.button}</button>
-            <button className='primary-btn'>See the details</button>
             <button className='primary-btn'>Renew prescription</button>
+            <button className='primary-btn' onClick={handleSeeDetails}>
+              See the details
+            </button>
             <button className='secondary-btn' onClick={() => setVisibleMessages({ ...visibleMessages, [message.id]: false })}>
               Ignore
             </button>
