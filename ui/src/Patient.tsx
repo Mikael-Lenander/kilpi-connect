@@ -167,6 +167,11 @@ const ThyroidCharts = () => {
                 backgroundColor: 'rgba(40, 167, 69, 0.1)',
                 borderColor: 'rgba(40, 167, 69, 0.7)',
                 borderWidth: 1,
+                label: {
+                  content: 'Reference Range',
+                  display: true,
+                  position: 'start',
+                },
               },
             },
           },
